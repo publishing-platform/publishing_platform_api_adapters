@@ -1,2 +1,2 @@
-# publishing_platform_api_adapters
+# Publishing Platform API Adapters
 A set of API adapters to work with the Publishing Platform APIs
