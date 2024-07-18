@@ -35,16 +35,11 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
   # on the public site.
   #
   # @param content_id [UUID]
-  # @param update_type [String] Either 'major', 'minor' or 'republish'
   # @param options [Hash]
-  def publish(content_id, update_type = nil, options = {})
-    params = {
-      update_type:,
-    }
-
+  def publish(content_id, options = {})
     optional_keys = %i[previous_version]
 
-    params = merge_optional_keys(params, options, optional_keys)
+    params = merge_optional_keys({}, options, optional_keys)
 
     post_json(publish_url(content_id), params)
   end
