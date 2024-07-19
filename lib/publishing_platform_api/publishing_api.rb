@@ -102,6 +102,61 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
     post_json(discard_url(content_id), params)
   end
 
+  # Get the link set for the given content_id.
+  #
+  # Given a Content ID, it fetchs the existing link set and their version.
+  #
+  # @param content_id [String]
+  #
+  # @return [PublishingPlatformApi::Response] A response containing `links` and `version`.
+  #
+  # @example
+  #
+  #   publishing_api.get_links("a-content-id")
+  #   # => {
+  #     "content_id" => "a-content-id",
+  #     "links" => [
+  #       "organisation" => "organisation-content-id",
+  #       "document_collection" => "document-collection-content-id"
+  #     ],
+  #     "version" => 17
+  #   }
+  def get_links(content_id)
+    get_json(links_url(content_id))
+  end  
+
+  # Get expanded links
+  #
+  # Return the expanded links of the item.
+  #
+  # @param content_id [UUID]  
+  # @param with_drafts [Bool] Whether links to draft-only editions are returned, defaulting to `true`.
+  # @param generate [Bool] Whether to require publishing-api to generate the expanded links, which may be slow. Defaults to `false`.
+  #
+  # @example
+  #
+  #   publishing_api.get_expanded_links("8157589b-65e2-4df6-92ba-2c91d80006c0", with_drafts: false).to_h
+  #
+  #   #=> {
+  #     "generated" => "2017-08-01T10:42:49Z",
+  #     "expanded_links" => {
+  #       "organisations" => [
+  #         {
+  #           "content_id" => "21aa83a2-a47f-4189-a252-b02f8c322012",
+  #           ... (and more attributes)
+  #         }
+  #       ]
+  #     }
+  #   }
+  def get_expanded_links(content_id, with_drafts: true, generate: false)
+    params = {}
+    params[:with_drafts] = "false" unless with_drafts
+    params[:generate] = "true" if generate
+    query = query_string(params)
+    validate_content_id(content_id)
+    get_json("#{endpoint}/expanded-links/#{content_id}#{query}")
+  end  
+
   # Patch the links of a content item
   #
   # @param content_id [UUID]
@@ -151,6 +206,15 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
     query = query_string(params)
     get_json("#{endpoint}/content#{query}")
   end
+
+  # FIXME: Add documentation
+  def get_linkables(document_type: nil)
+    if document_type.nil?
+      raise ArgumentError, "Please provide a `document_type`"
+    end
+
+    get_json("#{endpoint}/linkables?document_type=#{document_type}")
+  end  
 
   # Reserves a path for a publishing application
   #
