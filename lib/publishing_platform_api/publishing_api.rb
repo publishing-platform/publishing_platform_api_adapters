@@ -10,7 +10,7 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
   # Put a content item
   #
   # @param content_id [UUID]
-  # @param payload [Hash] A valid content item  
+  # @param payload [Hash] A valid content item
   def put_content(content_id, payload)
     put_json(content_url(content_id), payload)
   end
@@ -123,13 +123,13 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
   #   }
   def get_links(content_id)
     get_json(links_url(content_id))
-  end  
+  end
 
   # Get expanded links
   #
   # Return the expanded links of the item.
   #
-  # @param content_id [UUID]  
+  # @param content_id [UUID]
   # @param with_drafts [Bool] Whether links to draft-only editions are returned, defaulting to `true`.
   # @param generate [Bool] Whether to require publishing-api to generate the expanded links, which may be slow. Defaults to `false`.
   #
@@ -155,14 +155,14 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
     query = query_string(params)
     validate_content_id(content_id)
     get_json("#{endpoint}/expanded-links/#{content_id}#{query}")
-  end  
+  end
 
   # Patch the links of a content item
   #
   # @param content_id [UUID]
   # @param params [Hash]
   # @option params [Hash] links A "links hash"
-  # @option params [Integer] previous_version The previous version (returned by `get_links`). If this version is not the current version, the publishing-api will reject the change and return 409 Conflict. (optional)  
+  # @option params [Integer] previous_version The previous version (returned by `get_links`). If this version is not the current version, the publishing-api will reject the change and return 409 Conflict. (optional)
   # @example
   #
   #   publishing_api.patch_links(
@@ -214,7 +214,7 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
     end
 
     get_json("#{endpoint}/linkables?document_type=#{document_type}")
-  end  
+  end
 
   # Reserves a path for a publishing application
   #
