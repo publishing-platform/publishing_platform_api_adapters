@@ -20,6 +20,18 @@ module PublishingPlatformApi
     )
   end
 
+  # Creates a PublishingPlatformApi::Organisations adapter for accessing
+  # APIs through the origin, where the requests will be handled by
+  # Collections frontend.
+  #
+  # @return [PublishingPlatformApi::Organisations]
+  def self.organisations(options = {})
+    PublishingPlatformApi::Organisations.new(
+      PublishingPlatformLocation.new.website_root,
+      options,
+    )
+  end
+
   # Creates a PublishingPlatformApi::PublishingApi adapter
   #
   # This will set a bearer token if a PUBLISHING_API_BEARER_TOKEN environment
