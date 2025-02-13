@@ -3,6 +3,7 @@ require "publishing_platform_location"
 require "time"
 require "publishing_platform_api/content_store"
 require "publishing_platform_api/publishing_api"
+require "publishing_platform_api/organisations"
 require "publishing_platform_api/router"
 
 # @api documented
