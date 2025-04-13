@@ -1,5 +1,3 @@
-require "publishing_platform_api/test_helpers/json_client_helper"
-
 module PublishingPlatformApi
   module TestHelpers
     module Router
