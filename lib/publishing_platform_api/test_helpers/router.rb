@@ -19,8 +19,8 @@ module PublishingPlatformApi
         stub_router_has_route(path, handler: "backend", backend_id:, disabled:, route_type:)
       end
 
-      def stub_router_has_redirect_route(path, redirect_to:, route_type: "exact", disabled: false)
-        stub_router_has_route(path, handler: "redirect", redirect_to:, disabled:, route_type:)
+      def stub_router_has_redirect_route(path, redirect_to:, redirect_type: "permanent", route_type: "exact", disabled: false)
+        stub_router_has_route(path, handler: "redirect", redirect_to:, redirect_type:, disabled:, route_type:)
       end
 
       def stub_router_has_gone_route(path, route_type: "exact", disabled: false)
@@ -42,13 +42,14 @@ module PublishingPlatformApi
         })
       end
 
-      def stub_redirect_registration(path, type, destination, segments_mode = nil)
+      def stub_redirect_registration(path, type, destination, redirect_type, segments_mode = nil)
         stub_route_put({
           route: {
             incoming_path: path,
             route_type: type,
             handler: "redirect",
             redirect_to: destination,
+            redirect_type:,
             segments_mode:,
           },
         })
