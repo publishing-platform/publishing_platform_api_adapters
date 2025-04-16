@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
+require "simplecov"
+SimpleCov.start do
+  add_filter "/spec/"
+end
+
 require "publishing_platform_api_adapters"
+require "webmock/rspec"
+require "rack/test"
+
+WebMock.disable_net_connect!
+
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].sort.each { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
