@@ -1,20 +1,6 @@
 require_relative "base"
 
 class PublishingPlatformApi::Router < PublishingPlatformApi::Base
-  ### Backends
-
-  def get_backend(id)
-    get_json("#{endpoint}/backends/#{CGI.escape(id)}")
-  end
-
-  def add_backend(id, url)
-    put_json("#{endpoint}/backends/#{CGI.escape(id)}", backend: { backend_url: url })
-  end
-
-  def delete_backend(id)
-    delete_json("#{endpoint}/backends/#{CGI.escape(id)}")
-  end
-
   ### Routes
 
   def get_route(path)

@@ -5,9 +5,11 @@ SimpleCov.start do
   add_filter "/spec/"
 end
 
+require "climate_control"
 require "publishing_platform_api_adapters"
-require "webmock/rspec"
 require "rack/test"
+require "timecop"
+require "webmock/rspec"
 
 WebMock.disable_net_connect!
 
