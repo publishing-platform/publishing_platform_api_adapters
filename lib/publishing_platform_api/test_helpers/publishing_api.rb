@@ -78,7 +78,7 @@ module PublishingPlatformApi
           body: "{}",
           headers: { "Content-Type" => "application/json; charset=utf-8" },
         }.merge(response_hash)
-        stub_request(:post, url).with(body: body).to_return(response)
+        stub_request(:post, url).with(body:).to_return(response)
       end
 
       # Stub a POST /content/:content_id/republish request
@@ -93,7 +93,7 @@ module PublishingPlatformApi
           body: "{}",
           headers: { "Content-Type" => "application/json; charset=utf-8" },
         }.merge(response_hash)
-        stub_request(:post, url).with(body: body).to_return(response)
+        stub_request(:post, url).with(body:).to_return(response)
       end
 
       # Stub a POST /content/:content_id/unpublish request
@@ -269,9 +269,9 @@ module PublishingPlatformApi
                   end
 
         if matcher
-          assert_requested(verb, url, times: times, &matcher)
+          assert_requested(verb, url, times:, &matcher)
         else
-          assert_requested(verb, url, times: times)
+          assert_requested(verb, url, times:)
         end
       end
 
@@ -562,9 +562,9 @@ module PublishingPlatformApi
                   end
 
         if matcher
-          assert_requested(:put, url, times: times, &matcher)
+          assert_requested(:put, url, times:, &matcher)
         else
-          assert_requested(:put, url, times: times)
+          assert_requested(:put, url, times:)
         end
       end
 
@@ -599,7 +599,7 @@ module PublishingPlatformApi
         response = {
           status: 200,
           headers: { content_type: "application/json" },
-          body: params.merge(base_path: base_path).to_json,
+          body: params.merge(base_path:).to_json,
         }
 
         stub_request(:put, url).with(body: params).to_return(response)
@@ -612,7 +612,7 @@ module PublishingPlatformApi
       def stub_any_publishing_api_path_reservation
         stub_request(:put, %r{\A#{PUBLISHING_API_ENDPOINT}/paths/}).to_return do |request|
           base_path = request.uri.path.sub(%r{\A/paths}, "")
-          body = JSON.parse(request.body).merge(base_path: base_path)
+          body = JSON.parse(request.body).merge(base_path:)
           {
             status: 200,
             headers: { content_type: "application/json" },
@@ -639,13 +639,13 @@ module PublishingPlatformApi
         stub_request(:put, "#{PUBLISHING_API_ENDPOINT}/paths#{path}")
                   .to_return(status: 422,
                              headers: { content_type: "application/json" },
-                             body: { error: error }.to_json)
+                             body: { error: }.to_json)
 
         stub_request(:put, "#{PUBLISHING_API_ENDPOINT}/paths#{path}")
           .with(body: { "publishing_app" => publishing_app })
           .to_return(status: 200,
                      headers: { content_type: "application/json" },
-                     body: { publishing_app: publishing_app, base_path: path }.to_json)
+                     body: { publishing_app:, base_path: path }.to_json)
       end
 
       # Stub a PUT /paths/:base_path request for a particular publishing
@@ -665,12 +665,12 @@ module PublishingPlatformApi
 
         message = "#{error_fields.keys.first.to_s.capitalize.gsub(/_/, ' ')} #{error_fields.values.flatten.first}"
 
-        error = { code: 422, message: message, fields: error_fields }
+        error = { code: 422, message:, fields: error_fields }
 
         stub_request(:put, "#{PUBLISHING_API_ENDPOINT}/paths#{base_path}")
           .to_return(status: 422,
                      headers: { content_type: "application/json" },
-                     body: { error: error }.to_json)
+                     body: { error: }.to_json)
       end
 
     private
@@ -688,7 +688,7 @@ module PublishingPlatformApi
         response_hash.merge!(override_response_hash)
         response_hash[:body] = response_hash[:body].to_json if response_hash[:body].is_a?(Hash)
         url = "#{PUBLISHING_API_ENDPOINT}#{resource_path}/#{content_id}"
-        stub_request(method, url).with(body: body).to_return(response_hash)
+        stub_request(method, url).with(body:).to_return(response_hash)
       end
 
       def deep_stringify_keys(hash)
@@ -729,8 +729,8 @@ module PublishingPlatformApi
 
       def stub_publishing_api_unreserve_path_with_code(base_path, publishing_app, code)
         url = "#{PUBLISHING_API_ENDPOINT}/paths#{base_path}"
-        body = { publishing_app: publishing_app }
-        stub_request(:delete, url).with(body: body).to_return(status: code, body: "{}", headers: { "Content-Type" => "application/json; charset=utf-8" })
+        body = { publishing_app: }
+        stub_request(:delete, url).with(body:).to_return(status: code, body: "{}", headers: { "Content-Type" => "application/json; charset=utf-8" })
       end
 
       def values_match_recursively(expected_value, actual_value)
