@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "climate_control"
   spec.add_development_dependency "publishing_platform_rubocop"
+  spec.add_development_dependency "publishing_platform_schemas"
   spec.add_development_dependency "rack-test"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "timecop"

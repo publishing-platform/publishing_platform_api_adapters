@@ -7,6 +7,7 @@ end
 
 require "climate_control"
 require "publishing_platform_api_adapters"
+require "publishing_platform_schemas"
 require "rack/test"
 require "timecop"
 require "webmock/rspec"
