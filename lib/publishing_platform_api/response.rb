@@ -61,7 +61,7 @@ module PublishingPlatformApi
       alias_method :r_maxage, :reverse_max_age
 
       def shared_max_age
-        self["s-maxage"].to_i if key?("r-maxage")
+        self["s-maxage"].to_i if key?("s-maxage")
       end
       alias_method :s_maxage, :shared_max_age
 
