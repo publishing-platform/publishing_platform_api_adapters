@@ -10,8 +10,19 @@ jobs:
       matrix:
         ruby: [3.2, 3.3]
     runs-on: ubuntu-latest
+    env:
+      PUBLISHING_PLATFORM_CONTENT_SCHEMAS_PATH: vendor/publishing-api/content_schemas        
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout Publishing API (for Content Schemas)
+        uses: actions/checkout@v4
+        with:
+          repository: publishing-platform/publishing-api
+          ref: main
+          path: vendor/publishing-api      
+          token: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN }}   
+                 
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
