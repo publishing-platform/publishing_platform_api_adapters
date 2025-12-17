@@ -1,6 +1,7 @@
 require "addressable"
 require "publishing_platform_location"
 require "time"
+require "publishing_platform_api/asset_manager"
 require "publishing_platform_api/content_store"
 require "publishing_platform_api/publishing_api"
 require "publishing_platform_api/organisations"
@@ -8,6 +9,19 @@ require "publishing_platform_api/router"
 
 # @api documented
 module PublishingPlatformApi
+  # Creates a PublishingPlatformApi::AssetManager adapter
+  #
+  # This will set a bearer token if a ASSET_MANAGER_BEARER_TOKEN environment
+  # variable is set
+  #
+  # @return [PublishingPlatformApi::AssetManager]
+  def self.asset_manager(options = {})
+    PublishingPlatformApi::AssetManager.new(
+      PublishingPlatformLocation.find("asset-manager"),
+      { bearer_token: ENV["ASSET_MANAGER_BEARER_TOKEN"] }.merge(options),
+    )
+  end
+
   # Creates a PublishingPlatformApi::ContentStore adapter
   #
   # This will set a bearer token if a CONTENT_STORE_BEARER_TOKEN environment
