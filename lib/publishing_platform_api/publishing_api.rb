@@ -29,6 +29,52 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
     get_json(content_url(content_id, params))
   end
 
+  # Find the content_ids for a list of base_paths.
+  #
+  # @param base_paths [Array]
+  # @param exclude_document_types [Array] (optional)
+  # @param exclude_unpublishing_types [Array] (optional)
+  # @param with_drafts [Boolean] (optional)
+  # @return [Hash] a hash, keyed by `base_path` with `content_id` as value
+  # @example
+  #
+  #   publishing_api.lookup_content_ids(base_paths: ['/foo', '/bar'])
+  #   # => { "/foo" => "51ac4247-fd92-470a-a207-6b852a97f2db", "/bar" => "261bd281-f16c-48d5-82d2-9544019ad9ca" }
+  def lookup_content_ids(base_paths:, exclude_document_types: nil, exclude_unpublishing_types: nil, with_drafts: false)
+    options = { base_paths: }
+    options[:exclude_document_types] = exclude_document_types if exclude_document_types
+    options[:exclude_unpublishing_types] = exclude_unpublishing_types if exclude_unpublishing_types
+    options[:with_drafts] = with_drafts if with_drafts
+    response = post_json("#{endpoint}/lookup-by-base-path", options)
+    response.to_hash
+  end
+
+  # Find the content_id for a base_path.
+  #
+  # Convenience method if you only need to look up one content_id for a
+  # base_path. For multiple base_paths, use {PublishingPlatformApi::PublishingApi#lookup_content_ids}.
+  #
+  # @param base_path [String]
+  # @param exclude_document_types [Array] (optional)
+  # @param exclude_unpublishing_types [Array] (optional)
+  # @param with_drafts [Boolean] (optional)
+  #
+  # @return [UUID] the `content_id` for the `base_path`
+  #
+  # @example
+  #
+  #   publishing_api.lookup_content_id(base_path: '/foo')
+  #   # => "51ac4247-fd92-470a-a207-6b852a97f2db"
+  def lookup_content_id(base_path:, exclude_document_types: nil, exclude_unpublishing_types: nil, with_drafts: false)
+    lookups = lookup_content_ids(
+      base_paths: [base_path],
+      exclude_document_types:,
+      exclude_unpublishing_types:,
+      with_drafts:,
+    )
+    lookups[base_path]
+  end
+
   # Publish a content item
   #
   # The publishing-api will "publish" a draft item, so that it will be visible

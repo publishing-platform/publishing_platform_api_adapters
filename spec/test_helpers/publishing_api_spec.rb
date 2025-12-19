@@ -5,6 +5,17 @@ RSpec.describe PublishingPlatformApi::TestHelpers::PublishingApi do
   include PublishingPlatformApi::TestHelpers::PublishingApi
   let(:publishing_api) { PublishingPlatformApi::PublishingApi.new(PublishingPlatformLocation.find("publishing-api")) }
 
+  describe "#stub_publishing_api_has_lookups" do
+    it "stubs the lookup for content items" do
+      lookup_hash = { "/foo" => "2878337b-bed9-4e7f-85b6-10ed2cbcd504" }
+
+      stub_publishing_api_has_lookups(lookup_hash)
+
+      expect(publishing_api.lookup_content_ids(base_paths: ["/foo"])).to eql lookup_hash
+      expect(publishing_api.lookup_content_id(base_path: "/foo")).to eql "2878337b-bed9-4e7f-85b6-10ed2cbcd504"
+    end
+  end
+
   describe "#stub_publishing_api_has_content" do
     it "stubs the call to get content items" do
       stub_publishing_api_has_content([{ "content_id" => "2878337b-bed9-4e7f-85b6-10ed2cbcd504" }])
