@@ -6,6 +6,7 @@ require "publishing_platform_api/content_store"
 require "publishing_platform_api/publishing_api"
 require "publishing_platform_api/organisations"
 require "publishing_platform_api/router"
+require "publishing_platform_api/search"
 
 # @api documented
 module PublishingPlatformApi
@@ -70,6 +71,16 @@ module PublishingPlatformApi
     PublishingPlatformApi::Router.new(
       PublishingPlatformLocation.find("router-api"),
       { bearer_token: ENV["ROUTER_API_BEARER_TOKEN"] }.merge(options),
+    )
+  end
+
+  # Creates a PublishingPlatformApi::Search adapter to access via a search.* hostname
+  #
+  # @return [PublishingPlatformApi::Search]
+  def self.search(options = {})
+    PublishingPlatformApi::Search.new(
+      PublishingPlatformLocation.find("search-api"),
+      options,
     )
   end
 end
