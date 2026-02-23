@@ -1,0 +1,10 @@
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '30 10 * * 1-5' # 10:30am UTC, Mon-Fri.
+
+jobs:
+  autorelease:
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/autorelease-rubygem.yml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN }}
