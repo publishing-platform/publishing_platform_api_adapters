@@ -15,17 +15,17 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob("lib/**/*") + %w[README.md Rakefile]
   spec.require_paths = %w[lib]
 
-  spec.add_dependency "addressable"
+  spec.add_dependency "addressable", "~> 2.8"
   spec.add_dependency "link_header"
   spec.add_dependency "null_logger"
-  spec.add_dependency "publishing_platform_location"
+  spec.add_dependency "publishing_platform_location", "~> 0.3"
   spec.add_dependency "rest-client", "~> 2.0"
 
-  spec.add_development_dependency "climate_control"
-  spec.add_development_dependency "publishing_platform_rubocop"
-  spec.add_development_dependency "publishing_platform_schemas"
-  spec.add_development_dependency "rack-test"
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "timecop"
-  spec.add_development_dependency "webmock"
+  spec.add_development_dependency "climate_control", "~> 1.2"
+  spec.add_development_dependency "publishing_platform_rubocop", "~> 0.2"
+  spec.add_development_dependency "publishing_platform_schemas", "~> 0.4"
+  spec.add_development_dependency "rack-test", "~> 2.2"
+  spec.add_development_dependency "simplecov", "~> 0.22"
+  spec.add_development_dependency "timecop", "~> 0.9"
+  spec.add_development_dependency "webmock", "~> 3.26"
 end
