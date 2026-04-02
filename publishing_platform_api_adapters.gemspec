@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary = "Adapters to work with Publishing Platform APIs"
   spec.description = "Adapters to work with Publishing Platform APIs"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.1"
+  spec.required_ruby_version = ">= 3.2"
 
   spec.files = Dir.glob("lib/**/*") + %w[README.md Rakefile]
   spec.require_paths = %w[lib]
