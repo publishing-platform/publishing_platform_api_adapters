@@ -20,9 +20,8 @@ jobs:
         with:
           repository: publishing-platform/publishing-api
           ref: main
-          path: vendor/publishing-api      
-          token: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN }}   
-                 
+          path: vendor/publishing-api
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
