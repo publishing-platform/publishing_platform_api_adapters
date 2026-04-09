@@ -2,7 +2,17 @@ name: CI
 
 on: [push, pull_request]
 
-jobs:  
+jobs:
+  codeql-sast:
+    name: CodeQL SAST scan
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/codeql-analysis.yml@main
+    permissions:
+      security-events: write
+
+  dependency-review:
+    name: Dependency Review scan
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/dependency-review.yml@main
+  
   # This matrix job runs the test suite against multiple Ruby versions
   test_matrix:
     strategy:
