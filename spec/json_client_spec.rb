@@ -411,7 +411,7 @@ RSpec.describe PublishingPlatformApi::JsonClient do
      stub_request(:get, url).to_return(status: 200)
      PublishingPlatformApi::JsonClient.new.get_json(url)
      assert_requested(:get, /\/some.json/) do |request|
-       (request.headers["User-Agent"] == "publishing_platform_api_adapters/#{PublishingPlatformApi::VERSION} (api-tests)")
+       request.headers["User-Agent"] == "publishing_platform_api_adapters/#{PublishingPlatformApi::VERSION} (api-tests)"
      end)
   ensure
     ENV["PUBLISHING_PLATFORM_APP_NAME"] = previous_publishing_platform_app_name
