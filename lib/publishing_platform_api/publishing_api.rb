@@ -253,6 +253,22 @@ class PublishingPlatformApi::PublishingApi < PublishingPlatformApi::Base
     get_json("#{endpoint}/content#{query}")
   end
 
+  # Get events for a specific content_id
+  #
+  # @param content_id [UUID]
+  # @param params [Hash]
+  #
+  #  publishing_api.get_events_for_content_id(
+  #     "7ac47b33-c09c-4c1d-a9a7-0cfef99081ac",
+  #     { action: "PutContent", from: "2023-01-01T00:00:00Z", to: "2023-01-05T10:00:00Z" }
+  #  )
+  #
+  # @return [PublishingPlatformApi::Response] A response containing a list of events for that content ID
+  def get_events_for_content_id(content_id, params = {})
+    query = query_string(params)
+    get_json("#{endpoint}/content/#{content_id}/events#{query}")
+  end
+
   # FIXME: Add documentation
   def get_linkables(document_type: nil)
     if document_type.nil?
