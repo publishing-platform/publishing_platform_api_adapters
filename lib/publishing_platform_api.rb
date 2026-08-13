@@ -7,6 +7,7 @@ require "publishing_platform_api/publishing_api"
 require "publishing_platform_api/organisations"
 require "publishing_platform_api/router"
 require "publishing_platform_api/search"
+require "publishing_platform_api/signon_api"
 
 # @api documented
 module PublishingPlatformApi
@@ -81,6 +82,19 @@ module PublishingPlatformApi
     PublishingPlatformApi::Search.new(
       PublishingPlatformLocation.find("search-api"),
       options,
+    )
+  end
+
+  # Creates a PublishingPlatformApi::SignonApi adapter
+  #
+  # This will set a bearer token if a SIGNON_API_BEARER_TOKEN environment
+  # variable is set
+  #
+  # @return [PublishingPlatformApi::SignonApi]
+  def self.signon_api(options = {})
+    PublishingPlatformApi::SignonApi.new(
+      PublishingPlatformLocation.find("signon"),
+      { bearer_token: ENV["SIGNON_API_BEARER_TOKEN"] }.merge(options),
     )
   end
 end
