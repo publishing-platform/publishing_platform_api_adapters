@@ -7,7 +7,7 @@ require "publishing_platform_api/publishing_api"
 require "publishing_platform_api/organisations"
 require "publishing_platform_api/router"
 require "publishing_platform_api/search"
-require "publishing_platform_api/signon"
+require "publishing_platform_api/signon_api"
 
 # @api documented
 module PublishingPlatformApi
